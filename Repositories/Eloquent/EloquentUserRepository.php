@@ -35,6 +35,15 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
     {
         $this->role = $role;
         $this->user = $user;
+        /*
+            Make the user repository consistent so that it can use the BaseRepository
+            filterAndSort method which is used by numerous other methods
+
+            Has to be at this level because the UserComposer in the User module doesn't
+            use it's own repository but uses this repository instead
+            modules/users/Http/Composers/UsersComposer.php:4
+        */
+        $this->model = $user;
     }
 /***
  * Start Access only stuff
